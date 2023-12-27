@@ -40,3 +40,9 @@ From superstore;
 SELECT avg(price)
 FROM superstore
 WHERE category = 'Kitchen Supplies';
+
+#list the top 3 most expensive items under 'Electronics'
+Select item_name, price
+from superstore 
+Where category = 'Electronics'
+order by price desc limit 3
