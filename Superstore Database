@@ -37,6 +37,6 @@ SELECT AVG(price)
 From superstore; 
 
 #Show average price for items in the category 'Kitchen Supplies'
-SELECT avg(price), category
+SELECT avg(price)
 FROM superstore
 WHERE category = 'Kitchen Supplies';
