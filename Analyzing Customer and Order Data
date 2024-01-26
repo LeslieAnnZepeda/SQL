@@ -9,40 +9,47 @@ AND orderid <> 'Order ID'
 #2. How many of those orders were for an iPhone?
 SELECT distinct count(orderID)
 FROM BIT_DB.Jansales
-Where Length(OrderID)=6
-And Product="iPhone"
+WHERE Length(OrderID)=6
+AND Product="iPhone"
 
 #3. Select the customer account numbers for all the orders that were placed in February.
 SELECT distinct(customers.acctnum)
 FROM BIT_DB.customers
-inner join BIT_DB.febsales
-on customers.order_id=febsales.orderID
-Where length(orderID)=6
+INNER JOIN BIT_DB.febsales
+ON customers.order_id=febsales.orderID
+WHERE length(orderID)=6
 
 #4. Which product was the cheapest one sold in January, and what was the price? 
 SELECT Product, price
 FROM BIT_DB.jansales
-group by product
-order by price asc
-limit 1
+GROUP by product
+ORDER by price asc
+LIMIT 1
 
 #5. What is the total revenue for each product sold in January?
 SELECT SUM(quantity)* Price As Total_revenue,
 product
 FROM BIT_DB.jansales
-group by product
+GROUP by product
 
 #6. Which products were sold in February at 548 Lincoln St, Seattle, WA 98101, how many of each were sold, and what was the total revenue?
 SELECT SUM(quantity)* Price As Total_revenue,
 product, quantity
 FROM BIT_DB.febsales
-Where location= "548 Lincoln St, Seattle, WA 98101"
-group by product
+WHERE location= "548 Lincoln St, Seattle, WA 98101"
+GROUP by product
 
 #7. How many customers ordered more than 2 products at a time in February, and what was the average amount spent for those customers?
 SELECT count(distinct customers.acctnum), AVG(price*quantity)
 FROM BIT_DB.FebSales
 LEFT Join Customers
-On febsales.orderID= customers.Order_id
-Where febsales.quantity> 2
-And length(orderid)=6
+ON febsales.orderID= customers.Order_id
+WHERE febsales.quantity> 2
+AND length(orderid)=6
+
+#8. List all the products sold in Los Angeles in February, and include how many of each were sold.
+SELECT distinct product, SUM(quantity)
+FROM BIT_DB.febsales
+WHERE location like "%Los Angeles%"
+GROUP by product
+
