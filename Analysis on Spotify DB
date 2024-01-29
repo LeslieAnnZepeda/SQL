@@ -1,0 +1,74 @@
+# For this project, I downloaded Spotify data from Kaggle.
+# Then I created a table to insert Spotify data into.
+# Finally, I analyzed the spotify data using SQL. 
+
+#Create the table:
+CREATE TABLE BIT_DB.Spotifydata (
+id integer PRIMARY KEY,
+artist_name varchar NOT NULL,
+track_name varchar NOT NULL,
+track_id varchar NOT NULL,
+popularity integer NOT NULL,
+danceability decimal(4,3) NOT NULL,
+energy decimal(4,3) NOT NULL,
+key integer NOT NULL,
+loudness decimal(5,3) NOT NULL,
+mode integer NOT NULL,
+speechiness decimal(5,4) NOT NULL,
+acousticness decimal(6,5) NOT NULL,
+instrumentalness text NOT NULL,
+liveness decimal(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo decimal(6,3) NOT NULL,
+duration_ms integer NOT NULL,
+time_signature integer NOT NULL 
+)
+
+#Insert the Spotify Data .csv into the table.
+
+#Next, I explored the data using the following SQL. 
+
+# I identified the top 5 artists who have the highest average danceability for their tracks:
+SELECT artist_name, avg(danceability)as AVG_Danceability
+FROM BIT_DB.Spotifydata
+GROUP BY artist_name
+ORDER BY AVG_danceability desc
+LIMIT 5
+
+#I Calculated the average valence and energy for tracks with a duration longer than 3 minutes:
+SELECT track_name,AVG(energy)as AVG_energy, AVG(valence)as AVG_Valence,
+CASE WHEN duration_ms>180000 THEN "Greater Than 3 Min"
+WHEN duration_ms>120000 THEN "Greater Than 2 Min"
+WHEN duration_ms>60000 THEN "Greater Than 1 MIn"
+ELSE "UNDER 1 MIN" END AS "duration_min"
+FROM BIT_DB.Spotifydata
+WHERE duration_min = "Greater Than 3 Min"
+GROUP BY track_name
+
+#I identified the top 3 tracks with the highest energy released by each artist:
+SELECT artist_name, track_name, energy
+FROM BIT_DB.spotifydata
+GROUP BY artist_name
+ORDER BY energy desc
+LIMIT 3
+
+#I calculated the top 5 average loudness values for tracks released by each artist who has 2 or more tracks
+SELECT Count(track_name) as Track_count, artist_name, AVG(loudness) as Avg_Loudness
+FROM BIT_DB.Spotifydata
+GROUP BY artist_name
+HAVING track_count>=2
+ORDER BY track_count desc
+LIMIT 5
+
+#Lastly, I identified the top 5 artists with the highest average danceability for the tracks that start with the letter B,T or that  end with the letter S. 
+SELECT artist_name, track_name, avg(danceability) as avg_danceability
+FROM BIT_DB.spotifydata
+WHERE track_name like "B%" or track_name like "T%" or track_name like "%s"
+GROUP BY artist_name
+ORDER BY avg_danceability desc
+LIMIT 5
+
+
+
+
+
