@@ -37,10 +37,11 @@ LIMIT 5
 
 #I Calculated the average valence and energy for tracks with a duration longer than 3 minutes:
 SELECT track_name,AVG(energy)as AVG_energy, AVG(valence)as AVG_Valence,
-CASE WHEN duration_ms>180000 THEN "Greater Than 3 Min"
-WHEN duration_ms>120000 THEN "Greater Than 2 Min"
-WHEN duration_ms>60000 THEN "Greater Than 1 MIn"
-ELSE "UNDER 1 MIN" END AS "duration_min"
+  CASE WHEN duration_ms>180000 THEN "Greater Than 3 Min"
+    WHEN duration_ms>120000 THEN "Greater Than 2 Min"
+    WHEN duration_ms>60000 THEN "Greater Than 1 MIn"
+    ELSE "UNDER 1 MIN" 
+  END AS "duration_min"
 FROM BIT_DB.Spotifydata
 WHERE duration_min = "Greater Than 3 Min"
 GROUP BY track_name
