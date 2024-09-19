@@ -1,4 +1,4 @@
-#This project is based on the superstore data:
+#This project is based on the superstore database:
 
 CREATE TABLE superstore (
     item_id INTEGER PRIMARY KEY,
