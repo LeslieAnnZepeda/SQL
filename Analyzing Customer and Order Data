@@ -1,4 +1,4 @@
-#In this SQL query, I'm extracting information from a database that contains multiple tables to quantify statistics related to customer and order data.
+#In this SQL query, I'm extracting information from a database that contains multiple tables to quantify statistics related to customers and orders data.
 
 #1. How many orders were placed in January?
 SELECT distinct count(orderID)
